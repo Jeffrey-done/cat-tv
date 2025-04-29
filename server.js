@@ -5,7 +5,6 @@ const path = require('path');
 const apiRouter = require('./api/service');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // 中间件
 app.use(cors());
@@ -30,8 +29,19 @@ app.use((err, req, res, next) => {
     });
 });
 
-// 启动服务器
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`API Documentation: http://localhost:${PORT}/api/docs`);
-}); 
+// 处理所有其他路由
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Vercel 需要导出 app
+module.exports = app;
+
+// 仅在非 Vercel 环境下启动服务器
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+        console.log(`API Documentation: http://localhost:${PORT}/api/docs`);
+    });
+} 
