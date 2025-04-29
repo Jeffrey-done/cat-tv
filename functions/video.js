@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { API_SITES, API_CONFIG, PROXY_URL } = require('../js/config');
+import axios from 'axios';
+import { API_SITES, API_CONFIG, PROXY_URL } from '../js/config.js';
 
 // 搜索视频
 async function searchVideos(keyword, page = 1, limit = 20, source) {
@@ -143,8 +143,4 @@ async function fetchWithSource(url, source) {
     }
 }
 
-module.exports = {
-    searchVideos,
-    getVideoDetails,
-    getVideoPlayUrl
-}; 
+export { searchVideos, getVideoDetails, getVideoPlayUrl }; 

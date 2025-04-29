@@ -22,6 +22,4 @@ const validateApiKey = (req, res, next) => {
     next();
 };
 
-module.exports = {
-    validateApiKey
-}; 
+export { validateApiKey }; 

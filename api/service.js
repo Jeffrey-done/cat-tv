@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
+import { searchVideos, getVideoDetails, getVideoPlayUrl } from '../functions/video.js';
+import { validateApiKey } from '../middleware/auth.js';
+
 const router = express.Router();
-const { searchVideos, getVideoDetails, getVideoPlayUrl } = require('../functions/video');
-const { validateApiKey } = require('../middleware/auth');
 
 // API 路由配置
 router.use(express.json());
@@ -88,4 +89,4 @@ router.get('/sources', validateApiKey, (req, res) => {
     }
 });
 
-module.exports = router; 
+export default router; 

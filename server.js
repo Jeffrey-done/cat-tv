@@ -1,8 +1,12 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const apiRouter = require('./api/service');
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import apiRouter from './api/service.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -35,7 +39,7 @@ app.get('*', (req, res) => {
 });
 
 // Vercel 需要导出 app
-module.exports = app;
+export default app;
 
 // 仅在非 Vercel 环境下启动服务器
 if (process.env.NODE_ENV !== 'production') {
