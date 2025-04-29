@@ -1,15 +1,19 @@
 {
   "name": "libretv",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "免费在线视频搜索与观看平台",
-  "private": true,
-  "type": "module",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
-    "node-fetch": "^3.3.2"
+    "express": "^4.18.2",
+    "axios": "^1.6.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
   },
-  "author": "bestZwei",
-  "license": "MIT"
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
 }

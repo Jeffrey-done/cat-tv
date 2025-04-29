@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LibreTV API 文档</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .api-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        .method {
+            display: inline-block;
+            padding: 4px 8px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .endpoint {
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .params {
+            margin: 15px 0;
+        }
+        .param {
+            margin: 10px 0;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .param-type {
+            color: #666;
+            font-style: italic;
+        }
+        .param-required {
+            color: #e74c3c;
+            font-size: 0.9em;
+        }
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .response {
+            margin-top: 20px;
+        }
+        .response-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LibreTV API 文档</h1>
+        <p>本文档提供了 LibreTV API 的详细说明和使用方法。</p>
+
+        <div class="note">
+            <strong>注意：</strong>所有 API 请求都需要提供有效的 API 密钥。API 密钥可以通过以下两种方式提供：
+            <ul>
+                <li>在请求头中：<code>X-API-Key: your_api_key</code></li>
+                <li>在查询参数中：<code>api_key=your_api_key</code></li>
+            </ul>
+        </div>
+
+        <div class="api-section">
+            <h2>1. 搜索视频</h2>
+            <div class="method">GET</div>
+            <div class="endpoint">/api/search</div>
+            
+            <div class="params">
+                <h3>参数</h3>
+                <div class="param">
+                    <span class="param-name">keyword</span>
+                    <span class="param-type">(string)</span>
+                    <span class="param-required">必填</span>
+                    <p>搜索关键词</p>
+                </div>
+                <div class="param">
+                    <span class="param-name">page</span>
+                    <span class="param-type">(number)</span>
+                    <span>可选，默认值：1</span>
+                    <p>页码</p>
+                </div>
+                <div class="param">
+                    <span class="param-name">limit</span>
+                    <span class="param-type">(number)</span>
+                    <span>可选，默认值：20</span>
+                    <p>每页数量</p>
+                </div>
+                <div class="param">
+                    <span class="param-name">source</span>
+                    <span class="param-type">(string)</span>
+                    <span>可选</span>
+                    <p>指定视频源</p>
+                </div>
+            </div>
+
+            <div class="example">
+                <h3>示例请求</h3>
+                <pre>curl -X GET "http://localhost:3000/api/search?keyword=流浪地球&page=1&limit=10&api_key=your_api_key"</pre>
+            </div>
+
+            <div class="response">
+                <h3>响应示例</h3>
+                <pre>{
+    "code": 0,
+    "msg": "success",
+    "data": [
+        {
+            "id": "12345",
+            "name": "流浪地球",
+            "pic": "https://example.com/pic.jpg",
+            "year": "2023",
+            "area": "中国大陆",
+            "director": "郭帆",
+            "actor": "吴京,刘德华",
+            "content": "电影简介...",
+            "source": "heimuer"
+        }
+    ]
+}</pre>
+            </div>
+        </div>
+
+        <div class="api-section">
+            <h2>2. 获取视频详情</h2>
+            <div class="method">GET</div>
+            <div class="endpoint">/api/detail/:id</div>
+            
+            <div class="params">
+                <h3>参数</h3>
+                <div class="param">
+                    <span class="param-name">id</span>
+                    <span class="param-type">(string)</span>
+                    <span class="param-required">必填</span>
+                    <p>视频 ID</p>
+                </div>
+                <div class="param">
+                    <span class="param-name">source</span>
+                    <span class="param-type">(string)</span>
+                    <span class="param-required">必填</span>
+                    <p>视频源</p>
+                </div>
+            </div>
+
+            <div class="example">
+                <h3>示例请求</h3>
+                <pre>curl -X GET "http://localhost:3000/api/detail/12345?source=heimuer&api_key=your_api_key"</pre>
+            </div>
+
+            <div class="response">
+                <h3>响应示例</h3>
+                <pre>{
+    "code": 0,
+    "msg": "success",
+    "data": {
+        "id": "12345",
+        "name": "流浪地球",
+        "pic": "https://example.com/pic.jpg",
+        "year": "2023",
+        "area": "中国大陆",
+        "director": "郭帆",
+        "actor": "吴京,刘德华",
+        "content": "电影简介...",
+        "play_urls": {
+            "1": "https://example.com/video1.m3u8",
+            "2": "https://example.com/video2.m3u8"
+        },
+        "source": "heimuer"
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="api-section">
+            <h2>3. 获取视频播放地址</h2>
+            <div class="method">GET</div>
+            <div class="endpoint">/api/play/:id</div>
+            
+            <div class="params">
+                <h3>参数</h3>
+                <div class="param">
+                    <span class="param-name">id</span>
+                    <span class="param-type">(string)</span>
+                    <span class="param-required">必填</span>
+                    <p>视频 ID</p>
+                </div>
+                <div class="param">
+                    <span class="param-name">episode</span>
+                    <span class="param-type">(number)</span>
+                    <span>可选，默认值：1</span>
+                    <p>集数</p>
+                </div>
+                <div class="param">
+                    <span class="param-name">source</span>
+                    <span class="param-type">(string)</span>
+                    <span class="param-required">必填</span>
+                    <p>视频源</p>
+                </div>
+            </div>
+
+            <div class="example">
+                <h3>示例请求</h3>
+                <pre>curl -X GET "http://localhost:3000/api/play/12345?source=heimuer&episode=1&api_key=your_api_key"</pre>
+            </div>
+
+            <div class="response">
+                <h3>响应示例</h3>
+                <pre>{
+    "code": 0,
+    "msg": "success",
+    "data": {
+        "url": "https://example.com/video1.m3u8",
+        "type": "hls",
+        "episode": 1,
+        "total_episodes": 2
+    }
+}</pre>
+            </div>
+        </div>
+
+        <div class="api-section">
+            <h2>4. 获取所有视频源</h2>
+            <div class="method">GET</div>
+            <div class="endpoint">/api/sources</div>
+            
+            <div class="example">
+                <h3>示例请求</h3>
+                <pre>curl -X GET "http://localhost:3000/api/sources?api_key=your_api_key"</pre>
+            </div>
+
+            <div class="response">
+                <h3>响应示例</h3>
+                <pre>{
+    "code": 0,
+    "msg": "success",
+    "data": [
+        {
+            "id": "heimuer",
+            "name": "黑木耳",
+            "api": "https://json.heimuer.xyz",
+            "isAdult": false
+        },
+        {
+            "id": "ffzy",
+            "name": "非凡影视",
+            "api": "http://ffzy5.tv",
+            "isAdult": false
+        }
+    ]
+}</pre>
+            </div>
+        </div>
+
+        <div class="note">
+            <h2>错误处理</h2>
+            <p>所有 API 在发生错误时会返回以下格式的响应：</p>
+            <pre>{
+    "code": 1,
+    "msg": "错误信息",
+    "data": null
+}</pre>
+            <p>常见的错误码：</p>
+            <ul>
+                <li>401: API 密钥未提供</li>
+                <li>403: API 密钥无效</li>
+                <li>500: 服务器内部错误</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html> 
